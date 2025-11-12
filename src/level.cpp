@@ -4,8 +4,8 @@
 Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     this->tileset = IMG_LoadTexture(renderer, filename);
     this->cursorTile = {0, 0, 16, 16};
-    this->srcTile = {0, 0, 16, 16};
     this->levelGrid = vector<vector<int>>();
+    this->tileId = 0;
 }
 
 void Level::draw() const{
@@ -24,8 +24,9 @@ void Level::draw() const{
         }
     }
 
+    tileSrc = this->getTileFromID(tileId);
     // Cursor
-    SDL_RenderCopy(renderer, tileset, &srcTile, &cursorTile);
+    SDL_RenderCopy(renderer, tileset, &tileSrc, &cursorTile);
 
     SDL_RenderPresent(renderer);
 }
@@ -56,13 +57,12 @@ void Level::addTile(int x, int y){
         levelGrid[x].push_back(0);
     }
 
-    levelGrid[x][y] = 4;
+    levelGrid[x][y] = this->tileId;
 }
 
-void Level::setSrcTile(SDL_Rect tile){
-    this->srcTile = tile;
+void Level::setTileId(int id){
+    this->tileId = id;
 }
-
 
 SDL_Rect Level::getTileFromID(int id) const{
 

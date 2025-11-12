@@ -10,7 +10,7 @@
 
 using namespace std;
 
-const int SCALE_FAC = 5;
+const int SCALE_FAC = 5, TILE_SIZE = 16;
 
 class Tileset: public BaseWindow{
 private:
@@ -24,6 +24,8 @@ public:
     void draw() const override;
 
     void handleEvents(const SDL_Event &event) override;
+
+    int getIDFromTile(int x, int y, int tileSize) const;
 };
 
 #endif

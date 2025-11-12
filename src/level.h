@@ -14,8 +14,8 @@ class Level : public BaseWindow{
 private:
     vector<vector<int>> levelGrid;
     SDL_Rect cursorTile;
-    SDL_Rect srcTile;
     SDL_Texture *tileset;
+    int tileId;
 
 public:
 
@@ -25,7 +25,7 @@ public:
 
     void handleEvents(const SDL_Event& event) override;
 
-    void setSrcTile(SDL_Rect tile);
+    void setTileId(int id);
 
     void addTile(int x, int y);
 
