@@ -53,19 +53,10 @@ void Level::addTile(int x, int y){
     }
 
     while(levelGrid[x].size() <= y){
-        levelGrid[x].push_back(3);
+        levelGrid[x].push_back(0);
     }
 
-    levelGrid[x][y] = 6;
-
-    cout << "---------------"<< endl;
-    for(int i=0; i < levelGrid.size(); i++){
-        cout << "row : ";
-        for (int j=0; j < levelGrid[i].size(); j++){
-            cout << levelGrid[i][j] << " ";
-        }
-        cout << endl;
-    }
+    levelGrid[x][y] = 4;
 }
 
 void Level::setSrcTile(SDL_Rect tile){
@@ -74,9 +65,15 @@ void Level::setSrcTile(SDL_Rect tile){
 
 
 SDL_Rect Level::getTileFromID(int id) const{
+
+    if(id==0){
+        return {};
+    }
+
     int w, h;
     SDL_QueryTexture(tileset, NULL, NULL, &w, &h);
 
+    id -= 1;
     w/=16;
     h/=16;
 
@@ -85,4 +82,16 @@ SDL_Rect Level::getTileFromID(int id) const{
     }
 
     return {(id%w)*16, (h-1)*16, 16, 16};
+}
+
+
+void Level::displayGrid() const{
+    cout << "---------------"<< endl;
+    for(int i=0; i < levelGrid.size(); i++){
+        cout << "row : ";
+        for (int j=0; j < levelGrid[i].size(); j++){
+            cout << levelGrid[i][j] << " ";
+        }
+        cout << endl;
+    }
 }

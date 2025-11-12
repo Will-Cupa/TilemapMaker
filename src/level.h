@@ -30,6 +30,8 @@ public:
     void addTile(int x, int y);
 
     SDL_Rect getTileFromID(int id) const;
+
+    void displayGrid() const;
 };
 
 #endif
