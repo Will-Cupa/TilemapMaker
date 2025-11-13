@@ -37,7 +37,9 @@ void Level::handleEvents(const SDL_Event& event){
         case SDL_QUIT:
             // TODO
             break;
+
         case SDL_MOUSEMOTION:
+            SDL_RaiseWindow(window);
             cursorTile = tileAtMouse(event.motion.x, event.motion.y, tileSize);
             break;
 

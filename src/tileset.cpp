@@ -28,6 +28,10 @@ void Tileset::handleEvents(const SDL_Event& event){
             // TODO
             break;
 
+        case SDL_MOUSEMOTION:
+            SDL_RaiseWindow(window);
+            break;
+
         case SDL_MOUSEBUTTONDOWN:
             if(event.button.button == SDL_BUTTON_LEFT){
                 currentTile = tileAtMouse(event.motion.x, event.motion.y, TILE_SIZE*SCALE_FAC);
