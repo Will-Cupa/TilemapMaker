@@ -24,6 +24,12 @@ void BaseWindow::handleEvents(const SDL_Event& event){
         case SDL_QUIT:
             // TODO
             break;
+
+        case SDL_MOUSEMOTION:
+            // Raise window and set focus on hover
+            SDL_RaiseWindow(window);
+            SDL_SetWindowInputFocus(window);
+            break;
     }
 }
 

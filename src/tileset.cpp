@@ -29,7 +29,9 @@ void Tileset::handleEvents(const SDL_Event& event){
             break;
 
         case SDL_MOUSEMOTION:
+            // Raise window and set focus on hover
             SDL_RaiseWindow(window);
+            SDL_SetWindowInputFocus(window);
             break;
 
         case SDL_MOUSEBUTTONDOWN:

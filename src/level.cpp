@@ -39,7 +39,10 @@ void Level::handleEvents(const SDL_Event& event){
             break;
 
         case SDL_MOUSEMOTION:
+            // Raise window and set focus on hover
             SDL_RaiseWindow(window);
+            SDL_SetWindowInputFocus(window);
+
             cursorTile = tileAtMouse(event.motion.x, event.motion.y, tileSize);
             break;
 
