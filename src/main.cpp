@@ -49,7 +49,3 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-//to compile
-// g++ src/*.cpp -ID:\C++Libraries\SDL2\include -LD:\C++Libraries\SDL2\lib -lmingw32 -lSDL2main -lSDL2 -lSDL_image -o bin/main
-
-//g++ src/*.cpp -IZ:\personal\SDL2Library\include -LZ:\personal\SDL2Library\lib -lmingw32 -lSDL2main -lSDL2 -o bin/main
