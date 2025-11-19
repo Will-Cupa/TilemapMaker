@@ -44,6 +44,7 @@ void BaseWindow::destroy(){
     SDL_DestroyWindow(window);
 }
 
+
 SDL_Rect tileAtMouse(int x, int y, int tileSize){
     // Round to nearest 16 multiple
     return {x/tileSize * tileSize, y/tileSize * tileSize, tileSize, tileSize};

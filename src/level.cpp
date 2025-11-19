@@ -33,7 +33,7 @@ void Level::draw() const{
 
 void Level::handleEvents(const SDL_Event& event){
     int tileSize = 16*WIN_SCALE_FACTOR;
-    switch (event.type){
+    switch(event.type){
         case SDL_QUIT:
             // TODO
             break;
@@ -47,8 +47,13 @@ void Level::handleEvents(const SDL_Event& event){
             break;
 
         case SDL_MOUSEBUTTONDOWN:
-            if(event.button.button == SDL_BUTTON_LEFT){
-                addTile(cursorTile.x/tileSize, cursorTile.y/tileSize);
+            switch(event.button.button){
+                case SDL_BUTTON_LEFT:
+                    addTile(cursorTile.x/tileSize, cursorTile.y/tileSize);
+                    break;
+                
+                case SDL_BUTTON_MIDDLE:
+                    break;
             }
     }
 }
