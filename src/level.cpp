@@ -3,9 +3,13 @@
 
 Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     this->tileset = IMG_LoadTexture(renderer, filename);
+    
     this->cursorTile = {0, 0, 16, 16};
     this->levelGrid = vector<vector<int>>();
     this->tileId = 0;
+    
+    this->xOffset = 5;
+    this->yOffset = 5;
 }
 
 void Level::draw() const{
@@ -20,6 +24,8 @@ void Level::draw() const{
             tileSrc = this->getTileFromID(levelGrid[i][j]);
 
             tileDest = {i*16*WIN_SCALE_FACTOR, j*16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR};
+            addOffset(tileDest);
+
             SDL_RenderCopy(renderer, tileset, &tileSrc, &tileDest);
         }
     }
@@ -44,6 +50,7 @@ void Level::handleEvents(const SDL_Event& event){
             SDL_SetWindowInputFocus(window);
 
             cursorTile = tileAtMouse(event.motion.x, event.motion.y, tileSize);
+            removeOffset(cursorTile);
             break;
 
         case SDL_MOUSEBUTTONDOWN:
@@ -53,10 +60,13 @@ void Level::handleEvents(const SDL_Event& event){
                     break;
                 
                 case SDL_BUTTON_MIDDLE:
+                    xOffset = event.motion.x;
+                    yOffset = event.motion.y;
                     break;
             }
     }
 }
+
 
 void Level::addTile(int x, int y){
     while(levelGrid.size() <= x){
@@ -104,4 +114,14 @@ void Level::displayGrid() const{
         }
         cout << endl;
     }
+}
+
+void Level::addOffset(SDL_Rect& rect) const{
+    rect.x += xOffset;
+    rect.y += yOffset;
+}
+
+void Level::removeOffset(SDL_Rect& rect) const{
+    rect.x -= xOffset/16*WIN_SCALE_FACTOR;
+    rect.y -= xOffset/16*WIN_SCALE_FACTOR;
 }

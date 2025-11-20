@@ -15,7 +15,7 @@ private:
     vector<vector<int>> levelGrid;
     SDL_Rect cursorTile;
     SDL_Texture *tileset;
-    int tileId;
+    int tileId, xOffset, yOffset;
 
 public:
 
@@ -28,6 +28,9 @@ public:
     void setTileId(int id);
 
     void addTile(int x, int y);
+
+    void addOffset(SDL_Rect& rect) const;
+    void removeOffset(SDL_Rect& rect) const;
 
     SDL_Rect getTileFromID(int id) const;
 
