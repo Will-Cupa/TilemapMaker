@@ -8,8 +8,8 @@ Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     this->levelGrid = vector<vector<int>>();
     this->tileId = 0;
     
-    this->xOffset = 5;
-    this->yOffset = 5;
+    this->xOffset = 0;
+    this->yOffset = 0;
 }
 
 void Level::draw() const{
@@ -49,8 +49,8 @@ void Level::handleEvents(const SDL_Event& event){
             SDL_RaiseWindow(window);
             SDL_SetWindowInputFocus(window);
 
-            cursorTile = tileAtMouse(event.motion.x, event.motion.y, tileSize);
-            removeOffset(cursorTile);
+            cursorTile = tileAtMouse(event.motion.x + xOffset, event.motion.y + yOffset, tileSize);
+            // removeOffset(cursorTile);
             break;
 
         case SDL_MOUSEBUTTONDOWN:
