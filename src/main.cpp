@@ -28,6 +28,10 @@ int main(int argc, char *argv[]){
     while(running){
         //Events input
         while(SDL_PollEvent(&event)){
+            if (event.type == SDL_QUIT || (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)){
+                running = false;
+            }
+
             if(event.window.windowID == mainWinId){
                 level.handleEvents(event);
             }else if(event.window.windowID == tilesetId){

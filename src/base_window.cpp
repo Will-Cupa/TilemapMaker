@@ -21,8 +21,11 @@ BaseWindow::BaseWindow(const char* windowName, int width, int height){
 
 void BaseWindow::handleEvents(const SDL_Event& event){
     switch (event.type){
+
+        // This case will only work for single window app
         case SDL_QUIT:
-            // TODO
+            SDL_DestroyWindow(window);
+            SDL_DestroyRenderer(renderer);
             break;
 
         case SDL_MOUSEMOTION:

@@ -41,10 +41,6 @@ void Level::handleEvents(const SDL_Event& event){
     int tileSize = 16*WIN_SCALE_FACTOR;
 
     switch(event.type){
-        case SDL_QUIT:
-            // TODO
-            break;
-
         case SDL_MOUSEMOTION:
             // Raise window and set focus on hover
             SDL_RaiseWindow(window);
