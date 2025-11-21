@@ -36,7 +36,7 @@ int main(int argc, char *argv[]){
         }
 
         //Update
-
+        level.update();
         //Draw
         tileset.draw();
         level.draw();

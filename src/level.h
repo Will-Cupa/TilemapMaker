@@ -15,7 +15,8 @@ private:
     vector<vector<int>> levelGrid;
     SDL_Rect cursorTile;
     SDL_Texture *tileset;
-    int tileId, xOffset, yOffset;
+    int tileId, xOffset, yOffset, xOriginOffset, yOriginOffset;
+    bool middleMouse;
 
 public:
 
@@ -25,11 +26,14 @@ public:
 
     void handleEvents(const SDL_Event& event) override;
 
+    void update();
+
     void setTileId(int id);
 
     void addTile(int x, int y);
 
     void addOffset(SDL_Rect& rect) const;
+
     void removeOffset(SDL_Rect& rect) const;
 
     SDL_Rect getTileFromID(int id) const;

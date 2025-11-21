@@ -39,6 +39,7 @@ void Level::draw() const{
 
 void Level::handleEvents(const SDL_Event& event){
     int tileSize = 16*WIN_SCALE_FACTOR;
+
     switch(event.type){
         case SDL_QUIT:
             // TODO
@@ -60,10 +61,19 @@ void Level::handleEvents(const SDL_Event& event){
                     break;
                 
                 case SDL_BUTTON_MIDDLE:
-                    xOffset = event.motion.x;
-                    yOffset = event.motion.y;
+                    xOriginOffset = event.motion.x - xOffset;
+                    yOriginOffset = event.motion.y - yOffset;
                     break;
             }
+    }
+}
+
+
+void Level::update(){
+    int x, y;
+    if(SDL_GetMouseState(&x, &y) & SDL_BUTTON_MMASK){
+        xOffset = x - xOriginOffset;
+        yOffset = y - yOriginOffset;
     }
 }
 
