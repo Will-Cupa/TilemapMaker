@@ -15,6 +15,8 @@ private:
     vector<vector<int>> levelGrid;
     SDL_Rect cursorTile;
     SDL_Texture *tileset;
+    SDL_Cursor *moveCursor;
+    SDL_Cursor *drawCursor;
     int tileId, xOffset, yOffset, xOriginOffset, yOriginOffset;
     bool middleMouse;
 
@@ -39,6 +41,8 @@ public:
     SDL_Rect getTileFromID(int id) const;
 
     void displayGrid() const;
+
+    bool cursorInBounds() const;
 };
 
 #endif

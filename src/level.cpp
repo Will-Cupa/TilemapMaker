@@ -10,6 +10,11 @@ Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     
     this->xOffset = 0;
     this->yOffset = 0;
+
+    this->moveCursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZEALL);
+    this->drawCursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+
+    SDL_SetCursor(this->drawCursor);
 }
 
 void Level::draw() const{
@@ -31,8 +36,11 @@ void Level::draw() const{
     }
 
     tileSrc = this->getTileFromID(tileId);
+    
     // Cursor
-    SDL_RenderCopy(renderer, tileset, &tileSrc, &cursorTile);
+    if(this->cursorInBounds()){
+        SDL_RenderCopy(renderer, tileset, &tileSrc, &cursorTile);
+    }
 
     SDL_RenderPresent(renderer);
 }
@@ -53,14 +61,27 @@ void Level::handleEvents(const SDL_Event& event){
         case SDL_MOUSEBUTTONDOWN:
             switch(event.button.button){
                 case SDL_BUTTON_LEFT:
-                    addTile((cursorTile.x - xOffset)/tileSize, (cursorTile.y - yOffset)/tileSize);
+                    if(this->cursorInBounds()){
+                        addTile((cursorTile.x - xOffset)/tileSize, (cursorTile.y - yOffset)/tileSize);
+                    }
                     break;
                 
                 case SDL_BUTTON_MIDDLE:
+                    SDL_SetCursor(this->moveCursor);
                     xOriginOffset = event.motion.x - xOffset;
                     yOriginOffset = event.motion.y - yOffset;
                     break;
             }
+            break;
+
+        case SDL_MOUSEBUTTONUP:
+            switch(event.button.button){
+                case SDL_BUTTON_MIDDLE:
+                    cout << "release" << endl;
+                    SDL_SetCursor(this->drawCursor);
+                    break;
+            }
+            break;
     }
 }
 
@@ -75,6 +96,8 @@ void Level::update(){
 
 
 void Level::addTile(int x, int y){
+    if( x < 0 || y < 0) return;
+
     while(levelGrid.size() <= x){
         levelGrid.push_back({});
     }
@@ -129,4 +152,8 @@ void Level::addOffset(SDL_Rect& rect) const{
 void Level::removeOffset(SDL_Rect& rect) const{
     rect.x -= xOffset/16*WIN_SCALE_FACTOR;
     rect.y -= xOffset/16*WIN_SCALE_FACTOR;
+}
+
+bool Level::cursorInBounds() const{
+    return (cursorTile.x - xOffset) >= 0 && (cursorTile.y - yOffset) >= 0;
 }
