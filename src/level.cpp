@@ -46,14 +46,14 @@ void Level::handleEvents(const SDL_Event& event){
             SDL_RaiseWindow(window);
             SDL_SetWindowInputFocus(window);
 
-            cursorTile = tileAtMouse(event.motion.x + xOffset, event.motion.y + yOffset, tileSize);
-            // removeOffset(cursorTile);
+            cursorTile = tileAtMouse(event.motion.x - xOffset, event.motion.y - yOffset, tileSize);
+            addOffset(cursorTile);
             break;
 
         case SDL_MOUSEBUTTONDOWN:
             switch(event.button.button){
                 case SDL_BUTTON_LEFT:
-                    addTile(cursorTile.x/tileSize, cursorTile.y/tileSize);
+                    addTile((cursorTile.x - xOffset)/tileSize, (cursorTile.y - yOffset)/tileSize);
                     break;
                 
                 case SDL_BUTTON_MIDDLE:
@@ -91,7 +91,6 @@ void Level::setTileId(int id){
 }
 
 SDL_Rect Level::getTileFromID(int id) const{
-
     if(id==0){
         return {};
     }
