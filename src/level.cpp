@@ -17,6 +17,16 @@ Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     SDL_SetCursor(this->drawCursor);
 }
 
+void Level::save() const{
+    // Write out a list to a disk file
+    ofstream os("data.dat", ios::binary);
+
+    int size = levelGrid.size();
+
+    os.write((const char*)&levelGrid[0], size * sizeof(int));
+    os.close();
+}
+
 void Level::draw() const{
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer); //Not really clearing, more like filling
@@ -47,7 +57,7 @@ void Level::draw() const{
 
 void Level::handleEvents(const SDL_Event& event){
     int tileSize = 16*WIN_SCALE_FACTOR;
-
+    
     switch(event.type){
         case SDL_MOUSEMOTION:
             // Raise window and set focus on hover

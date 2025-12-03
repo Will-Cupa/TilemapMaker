@@ -2,6 +2,7 @@
 #define _LEVEL_H_
 
 #include <vector>
+#include <fstream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "base_window.h"
@@ -23,6 +24,8 @@ private:
 public:
 
     Level(const char* filename);
+
+    void save() const;
 
     void draw() const override;
 

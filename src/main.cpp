@@ -25,11 +25,21 @@ int main(int argc, char *argv[]){
     const int tilesetId = tileset.getWindowId();
     const int mainWinId = level.getWindowId();
 
+    const Uint8 *clavier = SDL_GetKeyboardState(NULL);
+
     while(running){
         //Events input
         while(SDL_PollEvent(&event)){
             if (event.type == SDL_QUIT || (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE)){
                 running = false;
+            }
+          
+            if(event.type ==SDL_KEYDOWN){
+                if(clavier[SDL_SCANCODE_A])
+                {
+                    cout << "A pressed" << endl;
+                    level.save();
+                }
             }
 
             if(event.window.windowID == mainWinId){
