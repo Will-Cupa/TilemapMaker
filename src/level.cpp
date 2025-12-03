@@ -28,7 +28,7 @@ void Level::draw() const{
         for (int j=0; j < levelGrid[i].size(); j++){
             tileSrc = this->getTileFromID(levelGrid[i][j]);
 
-            tileDest = {i*16*WIN_SCALE_FACTOR, j*16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR};
+            tileDest = {i*16*WIN_SCALE_FACTOR, HEIGHT - j*16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR};
             addOffset(tileDest);
 
             SDL_RenderCopy(renderer, tileset, &tileSrc, &tileDest);
@@ -62,7 +62,7 @@ void Level::handleEvents(const SDL_Event& event){
             switch(event.button.button){
                 case SDL_BUTTON_LEFT:
                     if(this->cursorInBounds()){
-                        addTile((cursorTile.x - xOffset)/tileSize, (cursorTile.y - yOffset)/tileSize);
+                        addTile((cursorTile.x - xOffset)/tileSize, (HEIGHT - cursorTile.y + yOffset)/tileSize);
                     }
                     break;
                 
@@ -77,7 +77,6 @@ void Level::handleEvents(const SDL_Event& event){
         case SDL_MOUSEBUTTONUP:
             switch(event.button.button){
                 case SDL_BUTTON_MIDDLE:
-                    cout << "release" << endl;
                     SDL_SetCursor(this->drawCursor);
                     break;
             }
@@ -155,5 +154,5 @@ void Level::removeOffset(SDL_Rect& rect) const{
 }
 
 bool Level::cursorInBounds() const{
-    return (cursorTile.x - xOffset) >= 0 && (cursorTile.y - yOffset) >= 0;
+    return (cursorTile.x - xOffset) >= 0 && (HEIGHT - cursorTile.y + yOffset) >= 0;
 }
