@@ -15,16 +15,48 @@ Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     this->drawCursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
 
     SDL_SetCursor(this->drawCursor);
+
+    this->load();
 }
 
 void Level::save() const{
     // Write out a list to a disk file
     ofstream os("data.dat", ios::binary);
 
-    int size = levelGrid.size();
+    int nbRow = levelGrid.size();
 
-    os.write((const char*)&levelGrid[0], size * sizeof(int));
+    os.write((const char*)&nbRow, sizeof(int));
+
+    for (int i = 0; i < nbRow; i++) { 
+        int rowSize = levelGrid[i].size();
+
+        os.write(reinterpret_cast<const char*>(&rowSize), sizeof(int));
+
+        os.write(reinterpret_cast<const char*>(levelGrid[i].data()), rowSize * sizeof(int));
+    }
+
     os.close();
+}
+
+void Level::load() {
+    ifstream is("data.dat", ios::binary);
+    if(!is) return;
+    
+    int nbRow, rowSize;
+
+    is.read(reinterpret_cast<char*>(&nbRow), sizeof(int));
+    levelGrid.resize(nbRow);
+
+    for(int i = 0; i < nbRow; i++){
+        is.read(reinterpret_cast<char*>(&rowSize), sizeof(int));
+        levelGrid[i].resize(rowSize);
+
+        is.read(reinterpret_cast<char*>(levelGrid[i].data()), rowSize * sizeof(int));
+
+        i++;
+    }
+
+    is.close();
 }
 
 void Level::draw() const{

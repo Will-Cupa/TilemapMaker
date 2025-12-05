@@ -27,6 +27,8 @@ public:
 
     void save() const;
 
+    void load();
+
     void draw() const override;
 
     void handleEvents(const SDL_Event& event) override;

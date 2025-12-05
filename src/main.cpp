@@ -35,6 +35,7 @@ int main(int argc, char *argv[]){
             }
           
             if(event.type ==SDL_KEYDOWN){
+                level.save();
                 if(clavier[SDL_SCANCODE_A])
                 {
                     cout << "A pressed" << endl;
