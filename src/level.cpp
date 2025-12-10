@@ -4,6 +4,9 @@
 Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     this->tileset = IMG_LoadTexture(renderer, filename);
     
+    // Allow alpha
+    SDL_SetTextureBlendMode(tileset, SDL_BLENDMODE_BLEND);
+
     this->cursorTile = {0, 0, 16, 16};
     this->levelGrid = vector<vector<int>>();
     this->tileId = 0;

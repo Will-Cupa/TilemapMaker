@@ -9,7 +9,9 @@ private:
     int **verticalHeights;
 
 public:
-    Tile(SDL_Texture *tileImage);
+    Tile(SDL_Texture *tileImage, int tileSize);
 };
+
+int** create2DArray(int size);
 
 #endif
