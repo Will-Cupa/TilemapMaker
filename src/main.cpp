@@ -39,7 +39,6 @@ int main(int argc, char *argv[]){
                 if(clavier[SDL_SCANCODE_A])
                 {
                     cout << "A pressed" << endl;
-                    level.save();
                 }
             }
 
