@@ -9,7 +9,7 @@ private:
     int **verticalHeights;
 
 public:
-    tile(SDL_Texture *tileImage);
+    Tile(SDL_Texture *tileImage);
 };
 
 #endif
