@@ -54,8 +54,6 @@ void Level::load() {
         is.read(reinterpret_cast<char*>(&rowSize), sizeof(int));
         levelGrid[i].resize(rowSize);
 
-        cout << i << " - size : " << rowSize << endl; 
-
         is.read(reinterpret_cast<char*>(levelGrid[i].data()), rowSize * sizeof(int));
     }
 

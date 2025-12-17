@@ -12,6 +12,25 @@ Tileset::Tileset(const char* filename, Level &level) : BaseWindow::BaseWindow(fi
     this->level = level;
 }
 
+void Tileset::createTiles(int w, int h){
+    SDL_Rect rect;
+    Uint32 format = SDL_GetWindowSurface(window)->format;
+    
+    void *pixels;
+
+    SDL_SetRenderTarget(renderer, tileset);
+
+    h /= TILE_SIZE;
+    w /= TILE_SIZE;
+
+    for(int x=0; x < h; x++){
+        for(int y=0; y < w; y++){
+            rect = {x, y, TILE_SIZE, TILE_SIZE};
+            SDL_RenderReadPixels(renderer, &rect, format, pixels, NULL);
+            tileList.push_back(Tile(, TILE_SIZE, pixels));
+        }
+    }
+}
 
 void Tileset::draw() const{
     SDL_RenderClear(renderer);

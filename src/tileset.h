@@ -4,9 +4,11 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>
+#include <vector>
 
 #include "base_window.h"
 #include "level.h"
+#include "tile.h"
 
 using namespace std;
 
@@ -17,6 +19,7 @@ private:
     SDL_Texture *tileset;
     SDL_Rect currentTile;
     Level &level;
+    vector<Tile> tileList;
 
 public:
     Tileset(const char* filename, Level &level);
