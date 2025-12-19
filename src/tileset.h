@@ -29,6 +29,8 @@ public:
     void handleEvents(const SDL_Event &event) override;
 
     int getIDFromTile(int x, int y, int tileSize) const;
+
+    void createTiles(int w, int h);
 };
 
 #endif

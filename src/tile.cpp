@@ -1,26 +1,24 @@
 #include "tile.h"
 
-Tile::Tile(int tileSize, int tileId, const void *pixels){
+Tile::Tile(int tileId, int tileSize, const void *pixels){
     id = tileId;
     horizontalHeights = create2DArray(tileSize);
     verticalHeights = create2DArray(tileSize);
 
-    calculateVerticalHeight(pixels);
+    calculateVerticalHeight(tileSize, pixels);
 }
 
-int** Tile::calculateVerticalHeight(const void *pixels){
+int** Tile::calculateVerticalHeight(int tileSize, const void *pixels){
     Uint32 *upixels = (Uint32*) pixels;
-
-    // you will need to know the color of the pixel even if it's transparent
-    // Uint32 transparent = SDL_MapRGBA(SDL_GetWindowSurface(window)->format, r, g, b, 0x00);
-
     // manipulate pixels
-    // for (int i = 0; i < w * h; i++)
-    // {
-    //     if (upixels[i] != transparent);
+    for (int i = 0; i < tileSize * tileSize; i++)
+    {
+        if (upixels[i] & 0x000F){
+            cout << (upixels[i] & 0xFF0000) << endl;
+        }
 
-    //     cout << i << endl;
-    // }
+        
+    }
 
     return NULL;
 }

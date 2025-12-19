@@ -13,7 +13,7 @@ private:
 public:
     Tile(int tileId, int tileSize, const void *pixels);
 
-    int** calculateVerticalHeight(const void *pixels);
+    int** calculateVerticalHeight(int tileSize, const void *pixels);
 };
 
 int** create2DArray(int size);
