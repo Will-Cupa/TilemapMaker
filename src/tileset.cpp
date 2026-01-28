@@ -4,36 +4,34 @@ Tileset::Tileset(const char* filename, Level &level) : BaseWindow::BaseWindow(fi
     this->tileset = IMG_LoadTexture(renderer, filename);
 
     int w, h;
-    SDL_QueryTexture(tileset, NULL, NULL, &w, &h);
+    Uint32 format;
+
+    SDL_QueryTexture(tileset, &format, NULL, &w, &h);
 
     SDL_SetWindowSize(window, w*SCALE_FAC, h*SCALE_FAC);
 
     this->currentTile = {0, 0, TILE_SIZE*SCALE_FAC, TILE_SIZE*SCALE_FAC};
     this->level = level;
 
-    this->createTiles(16, 16);
+    this->createTiles(h/TILE_SIZE, w/TILE_SIZE, format);
 }
 
-void Tileset::createTiles(int w, int h){
+void Tileset::createTiles(int h_tiles, int v_tiles, Uint32 format){
     SDL_Rect rect;
-    const Uint32 format = SDL_PIXELFORMAT_RGBA8888;
     const int bpp = SDL_BYTESPERPIXEL(format);
 
-    void *pixels = new int[h * w * bpp];
-    int pitch = w * bpp;
+    void *pixels = new int[TILE_SIZE * TILE_SIZE * bpp];
+    int pitch = TILE_SIZE * bpp;
 
     SDL_SetRenderTarget(renderer, tileset);
 
-    h /= TILE_SIZE;
-    w /= TILE_SIZE;
-
-    for(int x=0; x < h; x++){
-        for(int y=0; y < w; y++){
+    for(int x=0; x < v_tiles; x++){
+        for(int y=0; y < h_tiles; y++){
             rect = {x, y, TILE_SIZE, TILE_SIZE};
             SDL_RenderReadPixels(renderer, &rect, format, pixels, pitch);
 
             // y*w + x + 1 formula to get tile id from pos 
-            tileList.push_back(Tile(y*w + x + 1, TILE_SIZE, pixels));
+            tileList.push_back(Tile(y*h_tiles + x + 1, TILE_SIZE, pixels, format));
         }
     }
 }

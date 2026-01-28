@@ -11,9 +11,9 @@ private:
     int id, **horizontalHeights, **verticalHeights;
 
 public:
-    Tile(int tileId, int tileSize, const void *pixels);
+    Tile(int tileId, int tileSize, const void *pixels, Uint32 format);
 
-    int** calculateVerticalHeight(int tileSize, const void *pixels);
+    int** calculateVerticalHeight(int tileSize, const void *pixels, Uint32 format);
 };
 
 int** create2DArray(int size);

@@ -30,7 +30,7 @@ public:
 
     int getIDFromTile(int x, int y, int tileSize) const;
 
-    void createTiles(int w, int h);
+    void createTiles(int w, int h, Uint32 format);
 };
 
 #endif
