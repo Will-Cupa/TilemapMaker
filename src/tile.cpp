@@ -5,8 +5,8 @@ Tile::Tile(int tileId, int tileSize, const void *pixels, Uint32 format){
     horizontalHeights = create2DArray(tileSize);
     verticalHeights = create2DArray(tileSize);
 
-    cout << tileId << endl;
-    // calculateVerticalHeight(tileSize, pixels, format);
+    cout << "id :" << tileId << endl;
+    calculateVerticalHeight(tileSize, pixels, format);
 }
 
 int** Tile::calculateVerticalHeight(int tileSize, const void *pixels, Uint32 format){
@@ -25,6 +25,8 @@ int** Tile::calculateVerticalHeight(int tileSize, const void *pixels, Uint32 for
     {
         cout << (upixels[i] & alphaMask) << endl;
     }
+
+    // cout << "tile read" << endl;
 
     return NULL;
 }

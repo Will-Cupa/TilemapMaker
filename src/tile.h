@@ -11,6 +11,8 @@ private:
     int id, **horizontalHeights, **verticalHeights;
 
 public:
+    Tile() = default;
+
     Tile(int tileId, int tileSize, const void *pixels, Uint32 format);
 
     int** calculateVerticalHeight(int tileSize, const void *pixels, Uint32 format);

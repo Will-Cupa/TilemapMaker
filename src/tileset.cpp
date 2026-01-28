@@ -18,20 +18,24 @@ Tileset::Tileset(const char* filename, Level &level) : BaseWindow::BaseWindow(fi
 
 void Tileset::createTiles(int h_tiles, int v_tiles, Uint32 format){
     SDL_Rect rect;
+    Tile t;
+
     const int bpp = SDL_BYTESPERPIXEL(format);
+    const int pitch = TILE_SIZE * bpp;
 
     void *pixels = new int[TILE_SIZE * TILE_SIZE * bpp];
-    int pitch = TILE_SIZE * bpp;
 
     SDL_SetRenderTarget(renderer, tileset);
 
-    for(int x=0; x < v_tiles; x++){
-        for(int y=0; y < h_tiles; y++){
+    for(int y=0; y < v_tiles; y++){
+        for(int x=0; x < h_tiles; x++){
             rect = {x, y, TILE_SIZE, TILE_SIZE};
             SDL_RenderReadPixels(renderer, &rect, format, pixels, pitch);
 
             // y*w + x + 1 formula to get tile id from pos 
-            tileList.push_back(Tile(y*h_tiles + x + 1, TILE_SIZE, pixels, format));
+            t = Tile(y*h_tiles + x + 1, TILE_SIZE, pixels, format);
+
+            tileList.push_back(t);
         }
     }
 }
