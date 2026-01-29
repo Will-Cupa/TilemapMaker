@@ -23,10 +23,12 @@ int** Tile::calculateVerticalHeight(int tileSize, const void *pixels, Uint32 for
 
     for (int i = 0; i < tileSize * tileSize; i++)
     {
-        cout << (upixels[i] & alphaMask) << endl;
+        if(upixels[i] & alphaMask) {
+            cout << "filled" << endl;
+        };
     }
 
-    // cout << "tile read" << endl;
+    cout << "tile read" << endl;
 
     return NULL;
 }

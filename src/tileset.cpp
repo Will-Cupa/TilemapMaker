@@ -13,29 +13,23 @@ Tileset::Tileset(const char* filename, Level &level) : BaseWindow::BaseWindow(fi
     this->currentTile = {0, 0, TILE_SIZE*SCALE_FAC, TILE_SIZE*SCALE_FAC};
     this->level = level;
 
-    this->createTiles(h/TILE_SIZE, w/TILE_SIZE, format);
+    this->createTiles(IMG_Load(filename), h/TILE_SIZE, w/TILE_SIZE, format);
 }
 
-void Tileset::createTiles(int h_tiles, int v_tiles, Uint32 format){
+void Tileset::createTiles(SDL_Surface *tileset, int h_tiles, int v_tiles, Uint32 format){
     SDL_Rect rect;
     Tile t;
 
-    const int bpp = SDL_BYTESPERPIXEL(format);
-    const int pitch = TILE_SIZE * bpp;
-
-    void *pixels = new int[TILE_SIZE * TILE_SIZE * bpp];
-
-    SDL_SetRenderTarget(renderer, tileset);
+    void *pixels = SDL_malloc(TILE_SIZE * TILE_SIZE * tileset->format->BytesPerPixel);
 
     for(int y=0; y < v_tiles; y++){
         for(int x=0; x < h_tiles; x++){
-            rect = {x, y, TILE_SIZE, TILE_SIZE};
-            SDL_RenderReadPixels(renderer, &rect, format, pixels, pitch);
-
+            rect = {x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE};
+            
+            memcpy(pixels, tileset->pixels + (y * TILE_SIZE * tileset->pitch) + (x * TILE_SIZE * tileset->format->BytesPerPixel), TILE_SIZE * TILE_SIZE * tileset->format->BytesPerPixel);
+            
             // y*w + x + 1 formula to get tile id from pos 
-            t = Tile(y*h_tiles + x + 1, TILE_SIZE, pixels, format);
-
-            tileList.push_back(t);
+            tileList.emplace_back(y*h_tiles + x + 1, TILE_SIZE, pixels, tileset->format->format);
         }
     }
 }

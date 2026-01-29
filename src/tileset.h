@@ -30,7 +30,7 @@ public:
 
     int getIDFromTile(int x, int y, int tileSize) const;
 
-    void createTiles(int h_tiles, int v_tiles, Uint32 format);
+    void createTiles(SDL_Surface* tileset, int h_tiles, int v_tiles, Uint32 format);
 };
 
 #endif
