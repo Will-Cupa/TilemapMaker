@@ -2,14 +2,17 @@
 
 Tile::Tile(int tileId, int tileSize, const void *pixels, Uint32 format){
     id = tileId;
-    horizontalHeights = create2DArray(tileSize);
-    verticalHeights = create2DArray(tileSize);
+    horizontalHeights = new int[tileSize];
+    verticalHeights = new int[tileSize];
+
+    fill(horizontalHeights, horizontalHeights + tileSize, 0);
+    fill(verticalHeights, verticalHeights + tileSize, 0);
 
     cout << "id :" << tileId << endl;
-    calculateVerticalHeight(tileSize, pixels, format);
+    calculateHeights(tileSize, pixels, format);
 }
 
-int** Tile::calculateVerticalHeight(int tileSize, const void *pixels, Uint32 format){
+void Tile::calculateHeights(int tileSize, const void *pixels, Uint32 format){
     Uint32 *upixels = (Uint32*) pixels;
     
     Uint32 alphaMask, *dumped; // We can't pass NULL so we use a dump pointer
@@ -24,21 +27,15 @@ int** Tile::calculateVerticalHeight(int tileSize, const void *pixels, Uint32 for
     for (int i = 0; i < tileSize * tileSize; i++)
     {
         if(upixels[i] & alphaMask) {
-            cout << "filled" << endl;
+            verticalHeights[i%16]++;
+            horizontalHeights[i/16]++;
         };
     }
 
-    cout << "tile read" << endl;
-
-    return NULL;
-}
-
-int** create2DArray(int size){
-    int** array = new int *[size];
-    
-    for (int i = 0; i < size; i++){
-        array[i] = new int[size];
+    for (int i = 0; i < tileSize; i++)
+    {
+        cout << verticalHeights[i] << ", " << horizontalHeights[i] << endl;
     }
-
-    return array;
+    
+    cout << "tile read" << endl;
 }

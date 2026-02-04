@@ -8,16 +8,16 @@ using namespace std;
 
 class Tile{
 private:
-    int id, **horizontalHeights, **verticalHeights;
+    int id, *horizontalHeights, *verticalHeights;
 
 public:
     Tile() = default;
 
     Tile(int tileId, int tileSize, const void *pixels, Uint32 format);
 
-    int** calculateVerticalHeight(int tileSize, const void *pixels, Uint32 format);
+    void calculateHeights(int tileSize, const void *pixels, Uint32 format);
 };
 
-int** create2DArray(int size);
+int** create2DArray(const int size);
 
 #endif
