@@ -15,8 +15,8 @@ int main(int argc, char *argv[]){
 
     cout << "initiated" << endl;
 
-    Level level = Level("./tileset/tileset_tropical.png");
-    Tileset tileset = Tileset("./tileset/tileset_tropical.png", level);
+    Level level = Level("./tileset/tileset_tropical2.png");
+    Tileset tileset = Tileset("./tileset/tileset_tropical2.png", level);
 
     bool running = true;
 
