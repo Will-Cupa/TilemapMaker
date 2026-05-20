@@ -2,8 +2,11 @@
 #include <iostream>
 #include "tileset.h"
 #include "level.h"
+#include "tinyfiledialogs.h"
 
 using namespace std;
+
+char const * lFilterPatterns[2] = { "*.png", "*.jpg" };
 
 int main(int argc, char *argv[]){
     int init = SDL_Init(SDL_INIT_EVERYTHING);
@@ -14,6 +17,14 @@ int main(int argc, char *argv[]){
     };
 
     cout << "initiated" << endl;
+
+    tinyfd_openFileDialog(
+		"choose your tileset",
+		".",
+		2,
+		lFilterPatterns,
+		"image files",
+		1);
 
     Level level = Level("./tileset/tileset_tropical2.png");
     Tileset tileset = Tileset("./tileset/tileset_tropical2.png", level);
