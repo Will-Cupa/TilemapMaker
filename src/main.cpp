@@ -18,16 +18,10 @@ int main(int argc, char *argv[]){
 
     cout << "initiated" << endl;
 
-    tinyfd_openFileDialog(
-		"choose your tileset",
-		".",
-		2,
-		lFilterPatterns,
-		"image files",
-		1);
+    const char* imgPath = tinyfd_openFileDialog("choose your tileset", ".", 2, lFilterPatterns, "image files", 1);
 
-    Level level = Level("./tileset/tileset_tropical2.png");
-    Tileset tileset = Tileset("./tileset/tileset_tropical2.png", level);
+    Level level = Level(imgPath);
+    Tileset tileset = Tileset(imgPath, level);
 
     bool running = true;
 
