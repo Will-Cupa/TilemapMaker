@@ -7,6 +7,9 @@
 #include <SDL2/SDL_image.h>
 #include "base_window.h"
 
+#define LEVEL_HEADER "RETROSWING_ENGINE_LEVEL"
+#define HEADER_LENGTH 24
+
 using namespace std;
 
 const int HEIGHT = 672, WIDTH = 960, WIN_SCALE_FACTOR = 3;

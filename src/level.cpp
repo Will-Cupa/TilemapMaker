@@ -3,8 +3,6 @@
 
 Level::Level(const char* tileset_filename, const char* level_filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     this->tileset = IMG_LoadTexture(renderer, tileset_filename);
-    
-    cout << tileset_filename << endl;
 
     if (! tileset){
         cout << "invalid image format" << endl;
@@ -31,9 +29,11 @@ Level::Level(const char* tileset_filename, const char* level_filename) : BaseWin
 
 void Level::save() const{
     // Write out a list to a disk file
-    ofstream os("data.dat", ios::binary);
+    ofstream os("data.lvl", ios::binary);
 
     int nbRow = levelGrid.size();
+
+    os.write(LEVEL_HEADER, sizeof(char)*HEADER_LENGTH);
 
     os.write((const char*)&nbRow, sizeof(int));
 
@@ -50,9 +50,18 @@ void Level::save() const{
 
 void Level::load(const char* level_filename) {
     ifstream is(level_filename, ios::binary);
+
     if(!is) return;
     
-    cout << level_filename << endl;
+    char header[HEADER_LENGTH];
+
+    is.read(header, sizeof(char)*HEADER_LENGTH);
+
+    if(strcmp(header, LEVEL_HEADER)){
+        cout << "invalid level" << endl;
+        exit(-1);
+    }
+
     int nbRow, rowSize;
 
     is.read(reinterpret_cast<char*>(&nbRow), sizeof(int));
