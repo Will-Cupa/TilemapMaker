@@ -24,12 +24,13 @@ Level::Level(const char* tileset_filename, const char* level_filename) : BaseWin
 
     SDL_SetCursor(this->drawCursor);
     
-    this->load(level_filename);
+    this->level_filename = level_filename;
+    this->load();
 }
 
 void Level::save() const{
     // Write out a list to a disk file
-    ofstream os("data.lvl", ios::binary);
+    ofstream os(this->level_filename, ios::binary);
 
     int nbRow = levelGrid.size();
 
@@ -48,8 +49,8 @@ void Level::save() const{
     os.close();
 }
 
-void Level::load(const char* level_filename) {
-    ifstream is(level_filename, ios::binary);
+void Level::load() {
+    ifstream is(this->level_filename, ios::binary);
 
     if(!is) return;
     

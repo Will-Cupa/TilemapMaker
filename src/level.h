@@ -22,6 +22,7 @@ private:
     SDL_Cursor *moveCursor;
     SDL_Cursor *drawCursor;
     int tileId, xOffset, yOffset, xOriginOffset, yOriginOffset;
+    const char * level_filename;
     bool middleMouse;
 
 public:
@@ -30,7 +31,7 @@ public:
 
     void save() const;
 
-    void load(const char* level_filename);
+    void load();
 
     void draw() const override;
 
