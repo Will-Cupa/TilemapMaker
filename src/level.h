@@ -22,7 +22,7 @@ private:
     SDL_Cursor *moveCursor;
     SDL_Cursor *drawCursor;
     int tileId, xOffset, yOffset, xOriginOffset, yOriginOffset;
-    const char * level_filename;
+    string level_filename;
     bool middleMouse;
 
 public:
