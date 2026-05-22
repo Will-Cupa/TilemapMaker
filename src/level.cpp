@@ -1,9 +1,11 @@
 #include "level.h"
 
 
-Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
-    this->tileset = IMG_LoadTexture(renderer, filename);
+Level::Level(const char* tileset_filename, const char* level_filename) : BaseWindow("Level", WIDTH, HEIGHT) {
+    this->tileset = IMG_LoadTexture(renderer, tileset_filename);
     
+    cout << tileset_filename << endl;
+
     if (! tileset){
         cout << "invalid image format" << endl;
         exit(-1);
@@ -23,8 +25,8 @@ Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     this->drawCursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
 
     SDL_SetCursor(this->drawCursor);
-
-    this->load();
+    
+    this->load(level_filename);
 }
 
 void Level::save() const{
@@ -46,10 +48,11 @@ void Level::save() const{
     os.close();
 }
 
-void Level::load() {
-    ifstream is("data.dat", ios::binary);
+void Level::load(const char* level_filename) {
+    ifstream is(level_filename, ios::binary);
     if(!is) return;
     
+    cout << level_filename << endl;
     int nbRow, rowSize;
 
     is.read(reinterpret_cast<char*>(&nbRow), sizeof(int));

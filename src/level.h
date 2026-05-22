@@ -23,11 +23,11 @@ private:
 
 public:
 
-    Level(const char* filename);
+    Level(const char* tileset_filename, const char * level_filename);
 
     void save() const;
 
-    void load();
+    void load(const char* level_filename);
 
     void draw() const override;
 

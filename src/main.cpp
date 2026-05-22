@@ -6,7 +6,8 @@
 
 using namespace std;
 
-char const * lFilterPatterns[2] = { "*.png", "*.jpg" };
+char const * imgExtensionFilter[2] = { "*.png", "*.jpg" };
+char const * levelExtensionFilter[1] = { "*.lvl" };
 
 int main(int argc, char *argv[]){
     int init = SDL_Init(SDL_INIT_EVERYTHING);
@@ -18,14 +19,27 @@ int main(int argc, char *argv[]){
 
     cout << "initiated" << endl;
 
-    const char* imgPath = tinyfd_openFileDialog("choose your tileset", ".", 2, lFilterPatterns, "image files", 1);
+    const char* path = tinyfd_openFileDialog("choose the level to edit", ".", 1, levelExtensionFilter, "level files", 1);
 
-    if (! imgPath){
+    if (! path){
         return 0;
     }
 
-    Level level = Level(imgPath);
+    char* levelPath = strdup(path);
+
+    path = tinyfd_openFileDialog("choose the tileset to use", ".", 2, imgExtensionFilter, "image files", 1);
+
+    if (! path){
+        return 0;
+    }
+
+    char* imgPath = strdup(path);
+
+    Level level = Level(imgPath, levelPath);
+    free(levelPath);
+
     Tileset tileset = Tileset(imgPath, level);
+    free(imgPath);
 
     bool running = true;
 
