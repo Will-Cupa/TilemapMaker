@@ -4,6 +4,11 @@
 Level::Level(const char* filename) : BaseWindow("Level", WIDTH, HEIGHT) {
     this->tileset = IMG_LoadTexture(renderer, filename);
     
+    if (! tileset){
+        cout << "invalid image format" << endl;
+        exit(-1);
+    }
+
     // Allow alpha
     SDL_SetTextureBlendMode(tileset, SDL_BLENDMODE_BLEND);
 

@@ -3,6 +3,11 @@
 Tileset::Tileset(const char* filename, Level &level) : BaseWindow::BaseWindow(filename), level(level){
     this->tileset = IMG_LoadTexture(renderer, filename);
 
+    if (! tileset){
+        cout << "invalid image format" << endl;
+        exit(-1);
+    }
+
     int w, h;
     Uint32 format;
 
