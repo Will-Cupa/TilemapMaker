@@ -20,6 +20,10 @@ int main(int argc, char *argv[]){
 
     const char* imgPath = tinyfd_openFileDialog("choose your tileset", ".", 2, lFilterPatterns, "image files", 1);
 
+    if (! imgPath){
+        return 0;
+    }
+
     Level level = Level(imgPath);
     Tileset tileset = Tileset(imgPath, level);
 
