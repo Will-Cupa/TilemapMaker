@@ -55,7 +55,10 @@ void BaseWindow::handleEvents(const SDL_Event& event){
 
 void BaseWindow::update(){
     int x, y;
-    if(SDL_GetMouseState(&x, &y) & SDL_BUTTON_MMASK){
+
+    uint32_t flags = SDL_GetWindowFlags(window);
+
+    if(SDL_GetMouseState(&x, &y) & SDL_BUTTON_MMASK && flags & SDL_WINDOW_INPUT_FOCUS){
         // Displace the window content
         xOffset = x - xOldOffset;
         yOffset = y - yOldOffset;
