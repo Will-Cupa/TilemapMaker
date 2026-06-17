@@ -50,13 +50,10 @@ void Tileset::draw() const{
 
 
 void Tileset::handleEvents(const SDL_Event& event){
-    switch (event.type){
-        case SDL_MOUSEMOTION:
-            // Raise window and set focus on hover
-            SDL_RaiseWindow(window);
-            SDL_SetWindowInputFocus(window);
-            break;
+    // Handle base events with parent class
+    BaseWindow::handleEvents(event);
 
+    switch (event.type){
         case SDL_MOUSEBUTTONDOWN:
             if(event.button.button == SDL_BUTTON_LEFT){
                 currentTile = tileAtMouse(event.motion.x, event.motion.y, TILE_SIZE*SCALE_FAC);

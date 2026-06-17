@@ -8,6 +8,7 @@ using namespace std;
 
 class BaseWindow{
 protected:
+    int xOffset, yOffset, xOldOffset, yOldOffset;
     SDL_Window *window;
     SDL_Renderer *renderer;
 
@@ -19,6 +20,8 @@ public:
     virtual void draw() const = 0;
 
     virtual void handleEvents(const SDL_Event& event);
+
+    virtual void update();
 
     void destroy();
 };

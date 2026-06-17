@@ -7,6 +7,11 @@ BaseWindow::BaseWindow(const char* windowName, int width, int height){
         cout << "Failed to create window" << endl;
     }
 
+    this->xOffset = 0;
+    this->yOffset = 0;
+    this->xOldOffset = 0;
+    this->yOldOffset = 0;
+
     cout << "window created" << endl;
 
     this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -23,7 +28,6 @@ BaseWindow::BaseWindow(const char* windowName, int width, int height){
 
 void BaseWindow::handleEvents(const SDL_Event& event){
     switch (event.type){
-
         // This case will only work for single window app
         case SDL_QUIT:
             SDL_DestroyWindow(window);
@@ -35,6 +39,26 @@ void BaseWindow::handleEvents(const SDL_Event& event){
             SDL_RaiseWindow(window);
             SDL_SetWindowInputFocus(window);
             break;
+        
+         case SDL_MOUSEBUTTONDOWN:
+            switch(event.button.button){
+                case SDL_BUTTON_MIDDLE:
+                    // Save old offset
+                    xOldOffset = event.motion.x - xOffset;
+                    yOldOffset = event.motion.y - yOffset;
+                    break;
+            }
+            
+            break;
+    }
+}
+
+void BaseWindow::update(){
+    int x, y;
+    if(SDL_GetMouseState(&x, &y) & SDL_BUTTON_MMASK){
+        // Displace the grid
+        xOffset = x - xOldOffset;
+        yOffset = y - yOldOffset;
     }
 }
 

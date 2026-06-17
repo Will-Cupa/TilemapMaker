@@ -21,7 +21,7 @@ private:
     SDL_Texture *tileset;
     SDL_Cursor *moveCursor;
     SDL_Cursor *drawCursor;
-    int tileId, xOffset, yOffset, xOriginOffset, yOriginOffset;
+    int tileId;
     string level_filename;
     bool middleMouse;
 
@@ -36,8 +36,6 @@ public:
     void draw() const override;
 
     void handleEvents(const SDL_Event& event) override;
-
-    void update();
 
     void setTileId(int id);
 

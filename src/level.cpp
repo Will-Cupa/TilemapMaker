@@ -15,9 +15,6 @@ Level::Level(const char* tileset_filename, const char* level_filename) : BaseWin
     this->cursorTile = {0, 0, 16, 16};
     this->levelGrid = vector<vector<int>>();
     this->tileId = 0;
-    
-    this->xOffset = 0;
-    this->yOffset = 0;
 
     this->moveCursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZEALL);
     this->drawCursor = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
@@ -107,14 +104,13 @@ void Level::draw() const{
 }
 
 void Level::handleEvents(const SDL_Event& event){
+    // Handle base events with parent class
+    BaseWindow::handleEvents(event);
+
     int tileSize = 16*WIN_SCALE_FACTOR;
     
     switch(event.type){
         case SDL_MOUSEMOTION:
-            // Raise window and set focus on hover
-            SDL_RaiseWindow(window);
-            SDL_SetWindowInputFocus(window);
-
             cursorTile = tileAtMouse(event.motion.x - xOffset, event.motion.y - yOffset, tileSize);
             addOffset(cursorTile);
             break;
@@ -129,8 +125,6 @@ void Level::handleEvents(const SDL_Event& event){
                 
                 case SDL_BUTTON_MIDDLE:
                     SDL_SetCursor(this->moveCursor);
-                    xOriginOffset = event.motion.x - xOffset;
-                    yOriginOffset = event.motion.y - yOffset;
                     break;
             }
             break;
@@ -144,16 +138,6 @@ void Level::handleEvents(const SDL_Event& event){
             break;
     }
 }
-
-
-void Level::update(){
-    int x, y;
-    if(SDL_GetMouseState(&x, &y) & SDL_BUTTON_MMASK){
-        xOffset = x - xOriginOffset;
-        yOffset = y - yOriginOffset;
-    }
-}
-
 
 void Level::addTile(int x, int y){
     if( x < 0 || y < 0) return;
