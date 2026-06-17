@@ -39,3 +39,9 @@ void Tile::calculateHeights(int tileSize, const void *pixels, Uint32 format){
     
     cout << "tile read" << endl;
 }
+
+// On destroy
+Tile::~Tile(){
+    // delete[] horizontalHeights;
+    // delete[] verticalHeights;
+}

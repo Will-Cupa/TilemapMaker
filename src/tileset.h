@@ -17,6 +17,7 @@ const int SCALE_FAC = 5, TILE_SIZE = 16;
 class Tileset: public BaseWindow{
 private:
     SDL_Texture *tileset;
+    int tileset_h, tileset_w;
     SDL_Rect currentTile;
     Level &level;
     vector<Tile> tileList;

@@ -8,17 +8,16 @@ Tileset::Tileset(const char* filename, Level &level) : BaseWindow::BaseWindow(fi
         exit(-1);
     }
 
-    int w, h;
     Uint32 format;
 
-    SDL_QueryTexture(tileset, &format, NULL, &w, &h);
+    SDL_QueryTexture(tileset, &format, NULL, &tileset_w, &tileset_h);
 
-    SDL_SetWindowSize(window, w*SCALE_FAC, h*SCALE_FAC);
+    SDL_SetWindowSize(window, tileset_w*SCALE_FAC, tileset_h*SCALE_FAC);
 
     this->currentTile = {0, 0, TILE_SIZE*SCALE_FAC, TILE_SIZE*SCALE_FAC};
     this->level = level;
 
-    this->createTiles(IMG_Load(filename), h/TILE_SIZE, w/TILE_SIZE, format);
+    this->createTiles(IMG_Load(filename), tileset_h/TILE_SIZE, tileset_w/TILE_SIZE, format);
 }
 
 void Tileset::createTiles(SDL_Surface *tileset, int h_tiles, int v_tiles, Uint32 format){
@@ -40,8 +39,10 @@ void Tileset::createTiles(SDL_Surface *tileset, int h_tiles, int v_tiles, Uint32
 }
 
 void Tileset::draw() const{
+    SDL_Rect rect = {0, 0, tileset_w*SCALE_FAC, tileset_h*SCALE_FAC};
+    
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, tileset, NULL, NULL);
+    SDL_RenderCopy(renderer, tileset, NULL, &rect);
 
     SDL_RenderDrawRect(renderer, &currentTile);
     SDL_RenderPresent(renderer);

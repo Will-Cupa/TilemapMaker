@@ -16,6 +16,8 @@ public:
     Tile(int tileId, int tileSize, const void *pixels, Uint32 format);
 
     void calculateHeights(int tileSize, const void *pixels, Uint32 format);
+
+    ~Tile();
 };
 
 int** create2DArray(const int size);
