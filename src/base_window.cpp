@@ -1,10 +1,12 @@
 #include "base_window.h"
 
 BaseWindow::BaseWindow(const char* windowName, int width, int height){
+    cout << windowName << ": creating window" << endl;
+    
     this->window = SDL_CreateWindow(windowName, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
 
     if (window == nullptr){
-        cout << "Failed to create window" << endl;
+        cout << windowName << ": Failed to create window" << endl;
     }
 
     this->xOffset = 0;
@@ -12,15 +14,15 @@ BaseWindow::BaseWindow(const char* windowName, int width, int height){
     this->xOldOffset = 0;
     this->yOldOffset = 0;
 
-    cout << "window created" << endl;
+    cout << windowName << ": window created" << endl;
 
     this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
     if (renderer == nullptr){
-        cout << "Failed to create renderer" << endl;
+        cout << windowName << ": Failed to create renderer" << endl;
     }
 
-    cout << "Renderer created" << endl;
+    cout << windowName << ": Renderer created" << endl;
 
     SDL_SetWindowResizable(window, SDL_TRUE);
 }
