@@ -48,7 +48,7 @@ void BaseWindow::handleEvents(const SDL_Event& event){
                     yOldOffset = event.motion.y - yOffset;
                     break;
             }
-            
+
             break;
     }
 }
@@ -56,7 +56,7 @@ void BaseWindow::handleEvents(const SDL_Event& event){
 void BaseWindow::update(){
     int x, y;
     if(SDL_GetMouseState(&x, &y) & SDL_BUTTON_MMASK){
-        // Displace the grid
+        // Displace the window content
         xOffset = x - xOldOffset;
         yOffset = y - yOldOffset;
     }
@@ -73,8 +73,11 @@ void BaseWindow::destroy(){
     SDL_DestroyWindow(window);
 }
 
+SDL_Rect BaseWindow::canevasToScreenspace(const SDL_Rect& rect) const{
+    return {rect.x + xOffset, rect.y + yOffset, rect.w, rect.h};
+}
 
 SDL_Rect tileAtMouse(int x, int y, int tileSize){
-    // Round to nearest 16 multiple
+    // Round to nearest tileSize multiple
     return {x/tileSize * tileSize, y/tileSize * tileSize, tileSize, tileSize};
 }

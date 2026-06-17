@@ -41,10 +41,6 @@ public:
 
     void addTile(int x, int y);
 
-    void addOffset(SDL_Rect& rect) const;
-
-    void removeOffset(SDL_Rect& rect) const;
-
     SDL_Rect getTileFromID(int id) const;
 
     void displayGrid() const;

@@ -86,8 +86,7 @@ void Level::draw() const{
         for (int j=0; j < levelGrid[i].size(); j++){
             tileSrc = this->getTileFromID(levelGrid[i][j]);
 
-            tileDest = {i*16*WIN_SCALE_FACTOR, HEIGHT - j*16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR};
-            addOffset(tileDest);
+            tileDest = canevasToScreenspace({i*16*WIN_SCALE_FACTOR, HEIGHT - j*16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR, 16*WIN_SCALE_FACTOR});
 
             SDL_RenderCopy(renderer, tileset, &tileSrc, &tileDest);
         }
@@ -111,8 +110,7 @@ void Level::handleEvents(const SDL_Event& event){
     
     switch(event.type){
         case SDL_MOUSEMOTION:
-            cursorTile = tileAtMouse(event.motion.x - xOffset, event.motion.y - yOffset, tileSize);
-            addOffset(cursorTile);
+            cursorTile = canevasToScreenspace(tileAtMouse(event.motion.x - xOffset, event.motion.y - yOffset, tileSize));
             break;
 
         case SDL_MOUSEBUTTONDOWN:
@@ -186,16 +184,6 @@ void Level::displayGrid() const{
         }
         cout << endl;
     }
-}
-
-void Level::addOffset(SDL_Rect& rect) const{
-    rect.x += xOffset;
-    rect.y += yOffset;
-}
-
-void Level::removeOffset(SDL_Rect& rect) const{
-    rect.x -= xOffset/16*WIN_SCALE_FACTOR;
-    rect.y -= xOffset/16*WIN_SCALE_FACTOR;
 }
 
 bool Level::cursorInBounds() const{

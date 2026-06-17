@@ -25,7 +25,7 @@ void Tileset::createTiles(SDL_Surface *tileset, int h_tiles, int v_tiles, Uint32
     Tile t;
 
     void *pixels = SDL_malloc(TILE_SIZE * TILE_SIZE * tileset->format->BytesPerPixel);
-
+    // SDL_free(?)
     for(int y=0; y < v_tiles; y++){
         for(int x=0; x < h_tiles; x++){
             rect = {x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE};
@@ -39,12 +39,13 @@ void Tileset::createTiles(SDL_Surface *tileset, int h_tiles, int v_tiles, Uint32
 }
 
 void Tileset::draw() const{
-    SDL_Rect rect = {0, 0, tileset_w*SCALE_FAC, tileset_h*SCALE_FAC};
-    
+    SDL_Rect rect = {xOffset, yOffset, tileset_w*SCALE_FAC, tileset_h*SCALE_FAC};
+    SDL_Rect cursor = canevasToScreenspace(currentTile);
+
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, tileset, NULL, &rect);
 
-    SDL_RenderDrawRect(renderer, &currentTile);
+    SDL_RenderDrawRect(renderer, &cursor);
     SDL_RenderPresent(renderer);
 }
 
@@ -56,8 +57,8 @@ void Tileset::handleEvents(const SDL_Event& event){
     switch (event.type){
         case SDL_MOUSEBUTTONDOWN:
             if(event.button.button == SDL_BUTTON_LEFT){
-                currentTile = tileAtMouse(event.motion.x, event.motion.y, TILE_SIZE*SCALE_FAC);
-                level.setTileId(this->getIDFromTile(event.motion.x/SCALE_FAC, event.motion.y/SCALE_FAC, TILE_SIZE));
+                currentTile = tileAtMouse(event.motion.x - xOffset, event.motion.y - yOffset, TILE_SIZE*SCALE_FAC);
+                level.setTileId(this->getIDFromTile((event.motion.x-xOffset)/SCALE_FAC, (event.motion.y-yOffset)/SCALE_FAC, TILE_SIZE));
             }
             break;
     }

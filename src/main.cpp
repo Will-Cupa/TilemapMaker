@@ -73,6 +73,7 @@ int main(int argc, char *argv[]){
 
         //Update
         level.update();
+        tileset.update();
         //Draw
         tileset.draw();
         level.draw();

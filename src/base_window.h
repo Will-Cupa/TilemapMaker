@@ -17,6 +17,8 @@ public:
 
     int getWindowId() const;
 
+    SDL_Rect canevasToScreenspace(const SDL_Rect& rect) const;
+
     virtual void draw() const = 0;
 
     virtual void handleEvents(const SDL_Event& event);
