@@ -16,6 +16,8 @@ BaseWindow::BaseWindow(const char* windowName, int width, int height){
     }
 
     cout << "Renderer created" << endl;
+
+    SDL_SetWindowResizable(window, SDL_TRUE);
 }
 
 
