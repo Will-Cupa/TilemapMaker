@@ -6,9 +6,12 @@
 
 using namespace std;
 
+const float ZOOM_AMOUNT = 0.1f;
+
 class BaseWindow{
 protected:
     int xOffset, yOffset, xOldOffset, yOldOffset;
+    float zoom;
     SDL_Window *window;
     SDL_Renderer *renderer;
 

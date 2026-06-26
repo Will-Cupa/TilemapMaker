@@ -39,10 +39,11 @@ void Tileset::createTiles(SDL_Surface *tileset, int h_tiles, int v_tiles, Uint32
 }
 
 void Tileset::draw() const{
-    SDL_Rect rect = {xOffset, yOffset, tileset_w*SCALE_FAC, tileset_h*SCALE_FAC};
+    SDL_Rect rect = {xOffset, yOffset, tileset_w*SCALE_FAC*zoom, tileset_h*SCALE_FAC*zoom};
     SDL_Rect cursor = canevasToScreenspace(currentTile);
 
     SDL_RenderClear(renderer);
+
     SDL_RenderCopy(renderer, tileset, NULL, &rect);
 
     SDL_RenderDrawRect(renderer, &cursor);

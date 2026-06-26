@@ -47,8 +47,8 @@ void Level::save() const{
 }
 
 void Level::load() {
+    cout << "before" << endl;
     ifstream is(this->level_filename, ios::binary);
-
     if(!is) return;
     
     char header[HEADER_LENGTH];
@@ -59,16 +59,16 @@ void Level::load() {
         cout << "invalid level" << endl;
         exit(-1);
     }
-
+    
     int nbRow, rowSize;
 
     is.read(reinterpret_cast<char*>(&nbRow), sizeof(int));
     levelGrid.resize(nbRow);
-
+    
     for(int i = 0; i < nbRow; i++){
         is.read(reinterpret_cast<char*>(&rowSize), sizeof(int));
         levelGrid[i].resize(rowSize);
-
+        cout << "after" << endl;
         is.read(reinterpret_cast<char*>(levelGrid[i].data()), rowSize * sizeof(int));
     }
 

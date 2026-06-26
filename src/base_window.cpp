@@ -13,6 +13,7 @@ BaseWindow::BaseWindow(const char* windowName, int width, int height){
     this->yOffset = 0;
     this->xOldOffset = 0;
     this->yOldOffset = 0;
+    this->zoom = 1;
 
     cout << windowName << ": window created" << endl;
 
@@ -42,7 +43,11 @@ void BaseWindow::handleEvents(const SDL_Event& event){
             SDL_SetWindowInputFocus(window);
             break;
         
-         case SDL_MOUSEBUTTONDOWN:
+        case SDL_MOUSEWHEEL:
+            zoom += ZOOM_AMOUNT * event.wheel.y;
+            break;
+
+        case SDL_MOUSEBUTTONDOWN:
             switch(event.button.button){
                 case SDL_BUTTON_MIDDLE:
                     // Save old offset
